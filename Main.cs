@@ -17,10 +17,20 @@ public partial class Main : Control
     private TextureButton soundButton;
     private DicePad dicePad;
 
+    public event EventHandler MustRoll;
+    public event EventHandler RollsCompleted;
+    public event EventHandler FirstRoll;
+
     public int RollsRemaining { get; set; } = 3;
     public int TotalScore { get; set; } = 0;
+    public bool CanLockDice => RollsRemaining > 0 && RollsRemaining != 3;
     public DicePad DicePad => dicePad;
     
+    public void ForceRollNext()
+    {
+        MustRoll?.Invoke(this, new EventArgs());
+    }
+
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
@@ -35,12 +45,8 @@ public partial class Main : Control
 
         male1Loc = GetNode<PathFollow2D>("Male1Path/PathFollow2D");
         wizardLoc = GetNode<PathFollow2D>("WizardPath/PathFollow2D");			
-        /*
-        for (int i = 1; i < 6; i++)
-        {
-            GetNode<AnimatedSprite2D>("Die" + i).Play();
-        }
-        */
+
+        ForceRollNext();
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -49,13 +55,16 @@ public partial class Main : Control
         rollButton.Text = $"{RollsRemaining} Rolls";
         rollButton.Disabled = (RollsRemaining <= 0);
 
-        for (int i = 1; i <= 5; i++)
+        if (CanLockDice)
         {
-            if(Input.IsActionJustPressed("Lock" + i))
+            for (int i = 1; i <= 5; i++)
             {
-                GetNode<Sprite2D>("DicePad/Lock" + i).Visible = !GetNode<Sprite2D>("DicePad/Lock" + i).Visible;
+                if(Input.IsActionJustPressed("Lock" + i))
+                {
+                    GetNode<Sprite2D>("DicePad/Lock" + i).Visible = !GetNode<Sprite2D>("DicePad/Lock" + i).Visible;
+                }
             }
-        }	
+        }
 
         if (isRolling)
         {
@@ -132,6 +141,7 @@ public partial class Main : Control
         isRolling = true;
         rollButton.Disabled = true;
         RollsRemaining--;
+        
     }
     
     public void OnRollTimer()
@@ -139,6 +149,24 @@ public partial class Main : Control
         sheep.Animation = "idle";
         GetNode<Timer>("DiceTimer").Stop();
         isRolling = false;
+
+        if (RollsRemaining == 0)
+        {
+            RollsCompleted?.Invoke(this, new EventArgs());
+        }
+
+        if (RollsRemaining == 2)
+        {
+            FirstRoll?.Invoke(this, new EventArgs());
+        }
+
+        if (!CanLockDice)
+        {
+            for (int i = 1; i <= 5; i++)
+            {
+                GetNode<Sprite2D>("DicePad/Lock" + i).Visible = false;
+            }
+        }       
     }
 
     public void OnSoundClicked()

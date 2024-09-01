@@ -16,16 +16,26 @@ public partial class Main : Control
     private LeftPanel leftPanel;
     private TextureButton soundButton;
     private DicePad dicePad;
+    private int _totalScore = 0;
 
     public event EventHandler MustRoll;
     public event EventHandler RollsCompleted;
     public event EventHandler FirstRoll;
 
     public int RollsRemaining { get; set; } = 3;
-    public int TotalScore { get; set; } = 0;
     public bool CanLockDice => RollsRemaining > 0 && RollsRemaining != 3;
     public DicePad DicePad => dicePad;
     
+    public int TotalScore
+    {
+        get { return _totalScore; }
+        set
+        {
+            _totalScore = value;
+            GetNode<Label>("ScoreBanner/ScoreLabel").Text = $"Score: {value}";
+        }
+    }
+
     public void ForceRollNext()
     {
         MustRoll?.Invoke(this, new EventArgs());

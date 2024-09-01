@@ -234,3 +234,8 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [connection signal="pressed" from="Button1" to="." method="OneClicked"]
+[connection signal="pressed" from="Button2" to="." method="TwoClicked"]
+[connection signal="pressed" from="Button3" to="." method="ThreeClicked"]
+[connection signal="pressed" from="Button4" to="." method="FourClicked"]
+[connection signal="pressed" from="Button5" to="." method="FiveClicked"]
+[connection signal="pressed" from="Button6" to="." method="SixClicked"]

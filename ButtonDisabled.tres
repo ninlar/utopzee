@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://b0tglg6s5u3b4"]
+
+[ext_resource type="Texture2D" uid="uid://dq6228ehcqt61" path="res://Assets/Tiny Swords (Update 010)/UI/Buttons/Button_Disable_3Slides.png" id="1_45kb1"]
+
+[resource]
+texture = ExtResource("1_45kb1")
+texture_margin_left = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 7.0
+expand_margin_bottom = 6.0

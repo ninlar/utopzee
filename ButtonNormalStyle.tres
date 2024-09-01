@@ -1,0 +1,10 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://da8xvfi7m2dt3"]
+
+[ext_resource type="Texture2D" uid="uid://5kygw1067v4t" path="res://Assets/Tiny Swords (Update 010)/UI/Buttons/Button_Hover_3Slides.png" id="1_ijypq"]
+
+[resource]
+texture = ExtResource("1_ijypq")
+texture_margin_left = 5.0
+texture_margin_right = 5.0
+texture_margin_bottom = 7.0
+expand_margin_bottom = 6.0

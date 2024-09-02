@@ -18,8 +18,9 @@ public partial class Dice : AnimatedSprite2D
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
+        Main mainScene = GetNode<Main>("../..");
 
-        if (@event is InputEventMouseButton mouseButton)
+        if (mainScene.CanLockDice && @event is InputEventMouseButton mouseButton)
         {
             if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
             {

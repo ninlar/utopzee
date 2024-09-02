@@ -14,4 +14,22 @@ public partial class Dice : AnimatedSprite2D
     public override void _Process(double delta)
     {
     }
+
+    public override void _Input(InputEvent @event)
+    {
+        base._Input(@event);
+
+        if (@event is InputEventMouseButton mouseButton)
+        {
+            if (mouseButton.ButtonIndex == MouseButton.Left && mouseButton.Pressed)
+            {
+                if(Math.Abs(this.GlobalPosition.DistanceTo(mouseButton.GlobalPosition)) < 20.0f)
+                {
+                    string lockName = "../Lock" + this.Name.ToString()[this.Name.ToString().Length - 1];
+                    GetNode<Sprite2D>(lockName).Visible = !GetNode<Sprite2D>(lockName).Visible;
+                }
+
+            }
+        }
+    }
 }

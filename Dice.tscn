@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://488i76iej3i"]
+[gd_scene load_steps=10 format=3 uid="uid://488i76iej3i"]
 
 [ext_resource type="Texture2D" uid="uid://xno1uiop24xl" path="res://Assets/Sprites/D1.png" id="1_db1yi"]
 [ext_resource type="Texture2D" uid="uid://bvnrlf3o5hdvq" path="res://Assets/Sprites/D2.png" id="2_1dgae"]
@@ -34,8 +34,20 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pj6p2"]
+size = Vector2(106.667, 101.333)
+
 [node name="AnimatedDice" type="AnimatedSprite2D"]
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_6tc2n")
 frame_progress = 0.0383429
 script = ExtResource("7_fako1")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-53.3333, -53.3333)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(53.3333, 50.6666)
+shape = SubResource("RectangleShape2D_pj6p2")
+
+[connection signal="input_event" from="Area2D" to="." method="OnMouseInput"]

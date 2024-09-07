@@ -4,7 +4,8 @@ using System.Security.Cryptography;
 
 public partial class Main : Control
 {
-    //private RandomNumberGenerator random = RandomNumberGenerator.new();
+    const int MaxTurnsCompleted = 13;
+
     private bool goRight = true;
     private Vector2 prevPos = new Vector2();
     private bool isRolling = false;
@@ -19,6 +20,8 @@ public partial class Main : Control
     private RightPanel rightPanel;
     private TextureButton soundButton;
     private DicePad dicePad;
+    private CanvasModulate moonlightModulate;
+    private CanvasLayer fireworksLayer;
     private int _totalScore = 0;
     private int _bonusScore = 0;
 
@@ -27,6 +30,7 @@ public partial class Main : Control
     public event EventHandler FirstRoll;
 
     public int RollsRemaining { get; set; } = 3;
+    public int TurnsCompleted { get; set; } = 0;
     public bool UtopzeeScored { get; set; } = false;
     public bool CanLockDice => RollsRemaining > 0 && RollsRemaining != 3;
     public DicePad DicePad => dicePad;
@@ -37,7 +41,7 @@ public partial class Main : Control
         set
         {
             _bonusScore = value;
-            GetNode<Label>("RightPanel/BonusLabel").Text = _bonusScore.ToString();
+            GetNode<Label>("RightPanel/BonusLabel/Label").Text = _bonusScore.ToString();
         }
     }
 
@@ -62,8 +66,22 @@ public partial class Main : Control
 			BonusScore += 100;
 		}
 
+        TurnsCompleted++;
         ForceRollNext();
-        UnlockDice();         
+        UnlockDice();
+
+        if (TurnsCompleted == MaxTurnsCompleted)
+        {
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        rollButton.Disabled = true;
+        fireworksLayer.Visible = true;
+        moonlightModulate.Visible = true;
+        GetNode<Label>("FireworksLayer/FinalScoreBanner/ScoreLabel").Text = $"Score: {TotalScore}";
     }
 
     public void ForceRollNext()
@@ -88,6 +106,8 @@ public partial class Main : Control
         rightPanel = GetNode<RightPanel>("RightPanel");
         rightPanel.MainScene = this;                
         dicePad = GetNode<DicePad>("DicePad");
+        moonlightModulate = GetNode<CanvasModulate>("MoonlightModulate");
+        fireworksLayer = GetNode<CanvasLayer>("FireworksLayer");
 
         male1Loc = GetNode<PathFollow2D>("Male1Path/PathFollow2D");
         wizardLoc = GetNode<PathFollow2D>("WizardPath/PathFollow2D");			

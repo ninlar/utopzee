@@ -185,7 +185,7 @@ public partial class MiddlePanel : TextureRect
         GetNode<Label>("UtopzeeLabel/Label").Text = total.ToString();
         _buttonDisabled[IndexUtopzee] = true;
 		MainScene.UtopzeeScored = foundFive;
-		MainScene.ResetForNextRoll(total, false);		
+		MainScene.ResetForNextRoll(total, false);	
 	}
 
 	// Called when the node enters the scene tree for the first time.

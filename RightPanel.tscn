@@ -201,3 +201,7 @@ text = "Bonus"
 label_settings = SubResource("LabelSettings_0asqh")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="ThreeKindButton" to="." method="OnThreeKind"]
+[connection signal="pressed" from="FourKindButton" to="." method="OnFourKind"]
+[connection signal="pressed" from="ChanceButton" to="." method="OnChance"]

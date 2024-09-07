@@ -11,6 +11,8 @@ public partial class LeftPanel : TextureRect
     private IList<Button> _buttons = new List<Button>(NumberOfButtons);
     private bool[] _buttonDisabled = new bool[NumberOfButtons];
     private Main _mainScene;
+    public bool PanelCompleted { get; set; } = false;
+    public int PanelTotal { get; set; } = 0;
 
 
     public Main MainScene
@@ -43,9 +45,25 @@ public partial class LeftPanel : TextureRect
 
     public void MainScene_FirstRoll(object sender, EventArgs e)
     {
+        bool allDisabled = true;
         for (int i = 0; i < _buttons.Count; i++)
         {
+            if (!_buttonDisabled[i])
+            {
+                allDisabled = false;
+            }
+
             _buttons[i].Disabled = _buttonDisabled[i];
+        }
+
+        if (allDisabled && !PanelCompleted)
+        {
+            if (PanelTotal >= 63)
+            {
+                MainScene.TotalScore += 35;
+                MainScene.BonusScore += 35;
+                PanelCompleted = true;
+            }
         }
     }
 
@@ -75,6 +93,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("OneLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.One] = true;
         MainScene.ForceRollNext();
@@ -95,6 +114,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("TwoLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Two] = true;
         MainScene.ForceRollNext();
@@ -115,6 +135,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("ThreeLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Three] = true;
         MainScene.ForceRollNext();
@@ -135,6 +156,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("FourLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Four] = true;
         MainScene.ForceRollNext();
@@ -155,6 +177,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("FiveLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Five] = true;
         MainScene.ForceRollNext();
@@ -175,6 +198,7 @@ public partial class LeftPanel : TextureRect
 
         GetNode<Label>("SixLabel/Label").Text = total.ToString();
         MainScene.TotalScore += total;
+        PanelTotal += total;
         MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Six] = true;
         MainScene.ForceRollNext();

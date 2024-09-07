@@ -84,7 +84,7 @@ public partial class Main : Control
         GetNode<Label>("FireworksLayer/FinalScoreBanner/ScoreLabel").Text = $"Score: {TotalScore}";
     }
 
-    public void ForceRollNext()
+    private void ForceRollNext()
     {
         MustRoll?.Invoke(this, new EventArgs());
     }

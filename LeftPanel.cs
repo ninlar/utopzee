@@ -43,6 +43,18 @@ public partial class LeftPanel : TextureRect
         }
     }
 
+	private int[] GetInstanceCounts()
+	{
+		int[] instanceCounts = new int[(int)DiceValue.Six];
+
+		foreach(Dice die in _dice)
+		{
+			instanceCounts[die.Frame]++;
+		}
+
+		return instanceCounts;
+	}
+
     public void MainScene_FirstRoll(object sender, EventArgs e)
     {
         bool allDisabled = true;
@@ -91,12 +103,19 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}        
+
         GetNode<Label>("OneLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.One] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void TwoClicked()
@@ -112,12 +131,19 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}         
+
         GetNode<Label>("TwoLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Two] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void ThreeClicked()
@@ -133,12 +159,19 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}         
+
         GetNode<Label>("ThreeLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Three] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void FourClicked()
@@ -154,12 +187,19 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}         
+
         GetNode<Label>("FourLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Four] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void FiveClicked()
@@ -175,12 +215,19 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}         
+
         GetNode<Label>("FiveLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Five] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void SixClicked()
@@ -196,11 +243,18 @@ public partial class LeftPanel : TextureRect
             }
         }
 
+		int[] instanceCounts = GetInstanceCounts();
+		
+		bool foundFive = false;
+
+		foreach(int count in instanceCounts)
+		{
+			if (count == 5) foundFive = true;
+		}         
+
         GetNode<Label>("SixLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
         PanelTotal += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[(int) DiceFrame.Six] = true;
-        MainScene.ForceRollNext();
+        MainScene.ResetForNextRoll(total, foundFive);
     }			
 }

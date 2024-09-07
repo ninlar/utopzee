@@ -50,6 +50,21 @@ public partial class Main : Control
         }
     }
 
+    public void ResetForNextRoll(int additionalScore, bool addBonusUtopzee = false)
+    {
+        TotalScore += additionalScore;
+        RollsRemaining = Constants.DefaultRollsRemaining;
+
+		if (UtopzeeScored && addBonusUtopzee)
+		{
+			TotalScore += 100;
+			BonusScore += 100;
+		}
+
+        ForceRollNext();
+        UnlockDice();         
+    }
+
     public void ForceRollNext()
     {
         MustRoll?.Invoke(this, new EventArgs());
@@ -192,11 +207,16 @@ public partial class Main : Control
 
         if (!CanLockDice)
         {
-            for (int i = 1; i <= 5; i++)
-            {
-                GetNode<Sprite2D>("DicePad/Lock" + i).Visible = false;
-            }
+            UnlockDice();
         }       
+    }
+
+    private void UnlockDice()
+    {
+        for (int i = 1; i <= 5; i++)
+        {
+            GetNode<Sprite2D>("DicePad/Lock" + i).Visible = false;
+        }        
     }
 
     public void OnSoundClicked()

@@ -91,16 +91,9 @@ public partial class MiddlePanel : TextureRect
 		}
 
         GetNode<Label>("FullHouseLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[IndexFullHouse] = true;
-        MainScene.ForceRollNext();
 
-		if (MainScene.UtopzeeScored && foundFive)
-		{
-			MainScene.TotalScore += 100;
-			MainScene.BonusScore += 100;
-		}
+		MainScene.ResetForNextRoll(total, foundFive);
 	}
 
 	public void OnSmallRun()
@@ -125,10 +118,8 @@ public partial class MiddlePanel : TextureRect
 				{
 					maxConsecutive = consecutiveCount;
 				}
-				else
-				{
-					consecutiveCount = 0;
-				}
+
+				consecutiveCount = 0;
 			}
 		}
 
@@ -145,16 +136,9 @@ public partial class MiddlePanel : TextureRect
 		}
 
         GetNode<Label>("LargeRunLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[IndexLargeRun] = true;
-        MainScene.ForceRollNext();
 
-		if (MainScene.UtopzeeScored && foundFive)
-		{
-			MainScene.TotalScore += 100;
-			MainScene.BonusScore += 100;
-		}
+		MainScene.ResetForNextRoll(total, foundFive);
 	}
 
 	public void OnLargeRun()
@@ -179,16 +163,9 @@ public partial class MiddlePanel : TextureRect
 		}
 
         GetNode<Label>("LargeRunLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[IndexLargeRun] = true;
-        MainScene.ForceRollNext();
 
-		if (MainScene.UtopzeeScored && foundFive)
-		{
-			MainScene.TotalScore += 100;
-			MainScene.BonusScore += 100;
-		}
+		MainScene.ResetForNextRoll(total, foundFive);
 	}
 
 	public void OnUtopzee()
@@ -206,11 +183,9 @@ public partial class MiddlePanel : TextureRect
 
 
         GetNode<Label>("UtopzeeLabel/Label").Text = total.ToString();
-        MainScene.TotalScore += total;
-        MainScene.RollsRemaining = Constants.DefaultRollsRemaining;
         _buttonDisabled[IndexUtopzee] = true;
 		MainScene.UtopzeeScored = foundFive;
-        MainScene.ForceRollNext();	
+		MainScene.ResetForNextRoll(total, false);		
 	}
 
 	// Called when the node enters the scene tree for the first time.

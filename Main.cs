@@ -196,7 +196,7 @@ public partial class Main : Control
             {
                 if (!GetNode<Sprite2D>("DicePad/Lock" + i).Visible)
                 {
-                    GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = GetRandomNumber(random, 0, 5);
+                    GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = GetRandomNumber(random, 0, 6);
                 }
             }
         }	

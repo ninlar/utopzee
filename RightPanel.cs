@@ -7,6 +7,7 @@ public partial class RightPanel : TextureRect
 {
 	const int NumberOfButtons = 3;
 
+	private IList<Dice> _dice = new List<Dice>(Constants.NumberOfDice);
 	private IList<Button> _buttons = new List<Button>(NumberOfButtons);
     private bool[] _buttonDisabled = new bool[NumberOfButtons];
     private Main _mainScene;
@@ -18,6 +19,11 @@ public partial class RightPanel : TextureRect
         set
         {
             _mainScene = value;
+
+            for (int i = 1; i <= Constants.NumberOfDice; i++)
+            {
+                _dice.Add(value.GetNode<Dice>("DicePad/Die" + i));
+            }
 
 			_buttons.Add(GetNode<Button>("ThreeKindButton"));
 			_buttons.Add(GetNode<Button>("FourKindButton"));

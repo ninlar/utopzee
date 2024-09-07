@@ -187,3 +187,8 @@ anchor_right = 0.879166
 anchor_bottom = 0.789191
 grow_horizontal = 1
 grow_vertical = 1
+
+[connection signal="pressed" from="FullHouseButton" to="." method="OnFullHouse"]
+[connection signal="pressed" from="SmallRunButton" to="." method="OnSmallRun"]
+[connection signal="pressed" from="LargeRunButton" to="." method="OnLargeRun"]
+[connection signal="pressed" from="UtopzeeButton" to="." method="OnUtopzee"]

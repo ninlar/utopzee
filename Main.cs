@@ -19,15 +19,27 @@ public partial class Main : Control
     private TextureButton soundButton;
     private DicePad dicePad;
     private int _totalScore = 0;
+    private int _bonusScore = 0;
 
     public event EventHandler MustRoll;
     public event EventHandler RollsCompleted;
     public event EventHandler FirstRoll;
 
     public int RollsRemaining { get; set; } = 3;
+    public bool UtopzeeScored { get; set; } = false;
     public bool CanLockDice => RollsRemaining > 0 && RollsRemaining != 3;
     public DicePad DicePad => dicePad;
     
+    public int BonusScore
+    {
+        get { return _bonusScore; }
+        set
+        {
+            _bonusScore = value;
+            GetNode<Label>("RightPanel/BonusLabel").Text = _bonusScore.ToString();
+        }
+    }
+
     public int TotalScore
     {
         get { return _totalScore; }

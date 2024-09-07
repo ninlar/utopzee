@@ -3,7 +3,7 @@ using System;
 
 public partial class Dice : AnimatedSprite2D
 {
-    public int Value => this.Frame + 1;
+    public DiceValue Value => (DiceValue) this.Frame + 1;
 
     // This represents which 
     public int Ordinal => this.Name.ToString()[^1] - '0';

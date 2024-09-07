@@ -1,11 +1,12 @@
-[gd_scene load_steps=16 format=3 uid="uid://vc6co5mn1ojf"]
+[gd_scene load_steps=18 format=3 uid="uid://vc6co5mn1ojf"]
 
 [ext_resource type="Texture2D" uid="uid://dmtstcv0ku624" path="res://Assets/Tiny Swords (Update 010)/UI/Buttons/Button_Hover_9Slides.png" id="1_1o4wn"]
-[ext_resource type="Script" path="res://LeftPanel.cs" id="2_3mm1b"]
+[ext_resource type="Script" path="res://RightPanel.cs" id="2_vyqme"]
 [ext_resource type="StyleBox" uid="uid://da8xvfi7m2dt3" path="res://ButtonNormalStyle.tres" id="4_nv4xf"]
 [ext_resource type="StyleBox" uid="uid://b0tglg6s5u3b4" path="res://ButtonDisabled.tres" id="5_r52o5"]
 [ext_resource type="Texture2D" uid="uid://c2tk0sfwi2tqq" path="res://Assets/Tiny Swords (Update 010)/Effects/Fire/Fire.png" id="6_f3ptr"]
 [ext_resource type="StyleBox" uid="uid://2637wrocyccm" path="res://ButtonHover.tres" id="6_qa8pf"]
+[ext_resource type="Texture2D" uid="uid://cq6gakr7e6cos" path="res://Assets/Tiny Swords (Update 010)/UI/Ribbons/Ribbon_Red_3Slides.png" id="8_j2j77"]
 [ext_resource type="PackedScene" uid="uid://c61wkde7573qf" path="res://LabelControl.tscn" id="12_xf8rj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ndwaa"]
@@ -65,6 +66,10 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="LabelSettings" id="LabelSettings_0asqh"]
+font_size = 25
+outline_color = Color(0, 0, 0, 1)
+
 [node name="RightPanel" type="TextureRect"]
 texture_filter = 1
 anchors_preset = -1
@@ -72,10 +77,10 @@ anchor_right = 0.3
 anchor_bottom = 0.32
 texture = ExtResource("1_1o4wn")
 expand_mode = 1
-script = ExtResource("2_3mm1b")
+script = ExtResource("2_vyqme")
 metadata/_edit_use_anchors_ = true
 
-[node name="Button1" type="Button" parent="."]
+[node name="ThreeKindButton" type="Button" parent="."]
 texture_filter = 1
 layout_mode = 0
 offset_left = 20.0
@@ -96,7 +101,7 @@ theme_override_styles/pressed = ExtResource("6_qa8pf")
 theme_override_styles/normal = ExtResource("4_nv4xf")
 text = "3 of a Kind (Total)"
 
-[node name="Button2" type="Button" parent="."]
+[node name="FourKindButton" type="Button" parent="."]
 texture_filter = 1
 layout_mode = 0
 offset_left = 20.0
@@ -117,41 +122,20 @@ theme_override_styles/pressed = ExtResource("6_qa8pf")
 theme_override_styles/normal = ExtResource("4_nv4xf")
 text = "4 of Kind (Total)"
 
-[node name="Button3" type="Button" parent="."]
-texture_filter = 1
-layout_mode = 0
-offset_left = 20.0
-offset_top = 92.0
-offset_right = 178.0
-offset_bottom = 123.0
-tooltip_text = "Roll the dice!"
-focus_mode = 0
-theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
-theme_override_colors/font_pressed_color = Color(0.817522, 0.817521, 0.817521, 1)
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 14
-theme_override_styles/focus = ExtResource("4_nv4xf")
-theme_override_styles/disabled = ExtResource("5_r52o5")
-theme_override_styles/hover_pressed = ExtResource("6_qa8pf")
-theme_override_styles/hover = ExtResource("6_qa8pf")
-theme_override_styles/pressed = ExtResource("6_qa8pf")
-theme_override_styles/normal = ExtResource("4_nv4xf")
-text = "Full House (+25)"
-
-[node name="FourIcon" type="AnimatedSprite2D" parent="."]
-position = Vector2(41, 141.5)
+[node name="ChanceIcon" type="AnimatedSprite2D" parent="."]
+position = Vector2(41, 103.5)
 scale = Vector2(0.3, 0.31)
 sprite_frames = SubResource("SpriteFrames_owr5y")
 autoplay = "default"
 frame_progress = 0.96712
 
-[node name="Button4" type="Button" parent="."]
+[node name="ChanceButton" type="Button" parent="."]
 texture_filter = 1
 layout_mode = 0
 offset_left = 56.0
-offset_top = 128.0
+offset_top = 90.0
 offset_right = 177.0
-offset_bottom = 159.0
+offset_bottom = 121.0
 tooltip_text = "Roll the dice!"
 focus_mode = 0
 theme_override_colors/font_disabled_color = Color(1, 1, 1, 1)
@@ -166,7 +150,7 @@ theme_override_styles/pressed = ExtResource("6_qa8pf")
 theme_override_styles/normal = ExtResource("4_nv4xf")
 text = "Chance"
 
-[node name="OneLabel" parent="." instance=ExtResource("12_xf8rj")]
+[node name="ThreeKindLabel" parent="." instance=ExtResource("12_xf8rj")]
 layout_mode = 1
 anchor_left = 0.729167
 anchor_top = 0.130417
@@ -175,7 +159,7 @@ anchor_bottom = 0.233358
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="TwoLabel" parent="." instance=ExtResource("12_xf8rj")]
+[node name="FourKindLabel" parent="." instance=ExtResource("12_xf8rj")]
 layout_mode = 1
 anchor_left = 0.729167
 anchor_top = 0.315833
@@ -184,7 +168,7 @@ anchor_bottom = 0.418775
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="ThreeLabel" parent="." instance=ExtResource("12_xf8rj")]
+[node name="ChanceLabel" parent="." instance=ExtResource("12_xf8rj")]
 layout_mode = 1
 anchor_left = 0.729167
 anchor_top = 0.495833
@@ -193,16 +177,27 @@ anchor_bottom = 0.598774
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="FourLabel" parent="." instance=ExtResource("12_xf8rj")]
+[node name="BonusLabel" parent="." instance=ExtResource("12_xf8rj")]
 layout_mode = 1
-anchor_left = 0.733333
-anchor_top = 0.68625
-anchor_right = 0.879166
-anchor_bottom = 0.789191
+anchor_left = 0.729166
+anchor_top = 0.696667
+anchor_right = 0.874999
+anchor_bottom = 0.799608
 grow_horizontal = 1
 grow_vertical = 1
 
-[connection signal="pressed" from="Button1" to="." method="OneClicked"]
-[connection signal="pressed" from="Button2" to="." method="TwoClicked"]
-[connection signal="pressed" from="Button3" to="." method="ThreeClicked"]
-[connection signal="pressed" from="Button4" to="." method="FourClicked"]
+[node name="BonusBanner" type="Sprite2D" parent="."]
+position = Vector2(100.125, 142)
+scale = Vector2(0.720052, 0.46875)
+texture = ExtResource("8_j2j77")
+
+[node name="BonusLabel" type="Label" parent="BonusBanner"]
+offset_left = -58.5026
+offset_top = -32.0
+offset_right = 54.4974
+offset_bottom = 9.0
+theme_override_font_sizes/font_size = 22
+text = "Bonus"
+label_settings = SubResource("LabelSettings_0asqh")
+horizontal_alignment = 1
+vertical_alignment = 1

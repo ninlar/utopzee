@@ -14,6 +14,8 @@ public partial class Main : Control
     private PathFollow2D male1Loc;
     private Button rollButton;
     private LeftPanel leftPanel;
+    private MiddlePanel middlePanel;
+    private RightPanel rightPanel;
     private TextureButton soundButton;
     private DicePad dicePad;
     private int _totalScore = 0;
@@ -51,6 +53,12 @@ public partial class Main : Control
         soundButton = GetNode<TextureButton>("SoundButton");
         leftPanel = GetNode<LeftPanel>("LeftPanel");
         leftPanel.MainScene = this;
+
+        middlePanel = GetNode<MiddlePanel>("MiddlePanel");
+        middlePanel.MainScene = this;
+
+        rightPanel = GetNode<RightPanel>("RightPanel");
+        rightPanel.MainScene = this;                
         dicePad = GetNode<DicePad>("DicePad");
 
         male1Loc = GetNode<PathFollow2D>("Male1Path/PathFollow2D");

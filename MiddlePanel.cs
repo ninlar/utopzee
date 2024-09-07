@@ -135,8 +135,8 @@ public partial class MiddlePanel : TextureRect
 			total += 30;
 		}
 
-        GetNode<Label>("LargeRunLabel/Label").Text = total.ToString();
-        _buttonDisabled[IndexLargeRun] = true;
+        GetNode<Label>("SmallRunLabel/Label").Text = total.ToString();
+        _buttonDisabled[IndexSmallRun] = true;
 
 		MainScene.ResetForNextRoll(total, foundFive);
 	}

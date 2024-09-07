@@ -1,9 +1,10 @@
 using Godot;
 using System;
+using System.Security.Cryptography;
 
 public partial class Main : Control
 {
-    private Random random = new Random();
+    //private RandomNumberGenerator random = RandomNumberGenerator.new();
     private bool goRight = true;
     private Vector2 prevPos = new Vector2();
     private bool isRolling = false;
@@ -169,13 +170,16 @@ public partial class Main : Control
     
     public void OnTimer()
     {
-        for (int i = 1; i < 6; i++)
+        using(var random = System.Security.Cryptography.RandomNumberGenerator.Create())
         {
-            if (!GetNode<Sprite2D>("DicePad/Lock" + i).Visible)
+            for (int i = 1; i < 6; i++)
             {
-                GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = random.Next(6);
+                if (!GetNode<Sprite2D>("DicePad/Lock" + i).Visible)
+                {
+                    GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = GetRandomNumber(random, 0, 5);
+                }
             }
-        }		
+        }	
     }
     
     public void OnRollClicked()
@@ -217,6 +221,14 @@ public partial class Main : Control
         {
             GetNode<Sprite2D>("DicePad/Lock" + i).Visible = false;
         }        
+    }
+
+    private int GetRandomNumber(System.Security.Cryptography.RandomNumberGenerator rng, int minValue, int maxValue)
+    {
+        byte[] randomNumber = new byte[4];
+        rng.GetBytes(randomNumber);
+        int value = BitConverter.ToInt32(randomNumber, 0);
+        return Math.Abs(value % (maxValue - minValue)) + minValue;
     }
 
     public void OnSoundClicked()

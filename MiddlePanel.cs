@@ -12,7 +12,6 @@ public partial class MiddlePanel : TextureRect
 	const int IndexLargeRun = 2;
 	const int IndexUtopzee = 3;
 
-	private IList<Dice> _dice = new List<Dice>(Constants.NumberOfDice);
     private IList<Button> _buttons = new List<Button>(NumberOfButtons);
     private bool[] _buttonDisabled = new bool[NumberOfButtons];	
     private Main _mainScene;
@@ -24,11 +23,6 @@ public partial class MiddlePanel : TextureRect
         set
         {
             _mainScene = value;
-
-            for (int i = 1; i <= Constants.NumberOfDice; i++)
-            {
-                _dice.Add(value.GetNode<Dice>("DicePad/Die" + i));
-            }
 
 			_buttons.Add(GetNode<Button>("FullHouseButton"));
 			_buttons.Add(GetNode<Button>("SmallRunButton"));
@@ -56,29 +50,15 @@ public partial class MiddlePanel : TextureRect
         }
     }
 
-	private int[] GetInstanceCounts()
-	{
-		int[] instanceCounts = new int[(int)DiceValue.Six];
-
-		foreach(Dice die in _dice)
-		{
-			instanceCounts[die.Frame]++;
-		}
-
-		return instanceCounts;
-	}
-
 	public void OnFullHouse()
 	{
-		int[] instanceCounts = GetInstanceCounts();
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
-		bool foundFive = false;
 		bool foundThree = false;
 		bool foundTwo = false;
 
 		foreach(int count in instanceCounts)
 		{
-			if (count == 5) foundFive = true;
 			if (count == 3) foundThree = true;
 			if (count == 2) foundTwo = true;
 		}
@@ -98,16 +78,13 @@ public partial class MiddlePanel : TextureRect
 
 	public void OnSmallRun()
 	{
-		int[] instanceCounts = GetInstanceCounts();
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
-		bool foundFive = false;
 		int consecutiveCount = 0;
 		int maxConsecutive = 0;
 
 		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-			
+		{	
 			if (count > 0)
 			{
 				consecutiveCount++;
@@ -143,14 +120,12 @@ public partial class MiddlePanel : TextureRect
 
 	public void OnLargeRun()
 	{
-		int[] instanceCounts = GetInstanceCounts();
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
-		bool foundFive = false;
 		int notOneCount = 0;
 
 		foreach(int count in instanceCounts)
 		{
-			if (count == 5) foundFive = true;
 			if (count != 1) notOneCount++;
 		}
 		
@@ -170,17 +145,9 @@ public partial class MiddlePanel : TextureRect
 
 	public void OnUtopzee()
 	{
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
 		int total = foundFive ? 50 : 0;
-
 
         GetNode<Label>("UtopzeeLabel/Label").Text = total.ToString();
         _buttonDisabled[IndexUtopzee] = true;

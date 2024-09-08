@@ -10,7 +10,6 @@ public partial class RightPanel : TextureRect
 	const int IndexFourKind = 1;
 	const int IndexChance = 2;
 
-	private IList<Dice> _dice = new List<Dice>(Constants.NumberOfDice);
 	private IList<Button> _buttons = new List<Button>(NumberOfButtons);
     private bool[] _buttonDisabled = new bool[NumberOfButtons];
     private Main _mainScene;
@@ -22,11 +21,6 @@ public partial class RightPanel : TextureRect
         set
         {
             _mainScene = value;
-
-            for (int i = 1; i <= Constants.NumberOfDice; i++)
-            {
-                _dice.Add(value.GetNode<Dice>("DicePad/Die" + i));
-            }
 
 			_buttons.Add(GetNode<Button>("ThreeKindButton"));
 			_buttons.Add(GetNode<Button>("FourKindButton"));
@@ -53,18 +47,6 @@ public partial class RightPanel : TextureRect
         }
     }
 
-	private int[] GetInstanceCounts()
-	{
-		int[] instanceCounts = new int[(int)DiceValue.Six];
-
-		foreach(Dice die in _dice)
-		{
-			instanceCounts[die.Frame]++;
-		}
-
-		return instanceCounts;
-	}
-
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -77,18 +59,11 @@ public partial class RightPanel : TextureRect
 
 	public void OnChance()
 	{
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
 		int total = 0;
 
-		foreach(Dice die in _dice)
+		foreach(Dice die in MainScene.DiceList)
 		{
 			total += (int) die.Value;
 		}
@@ -101,15 +76,13 @@ public partial class RightPanel : TextureRect
 
 	public void OnThreeKind()
 	{
-		int[] instanceCounts = GetInstanceCounts();
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
-		bool foundFive = false;
 		bool foundThree = false;
 		bool foundFour = false;
 
 		foreach(int count in instanceCounts)
 		{
-			if (count == 5) foundFive = true;
 			if (count == 3) foundThree = true;
 			if (count == 4) foundFour = true;
 		}
@@ -118,7 +91,7 @@ public partial class RightPanel : TextureRect
 
 		if (foundFive || foundThree || foundFour)
 		{
-			foreach(Dice die in _dice)
+			foreach(Dice die in MainScene.DiceList)
 			{
 				total += (int) die.Value;
 			}
@@ -132,14 +105,12 @@ public partial class RightPanel : TextureRect
 
 	public void OnFourKind()
 	{
-		int[] instanceCounts = GetInstanceCounts();
+		(int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 		
-		bool foundFive = false;
 		bool foundFour = false;
 
 		foreach(int count in instanceCounts)
 		{
-			if (count == 5) foundFive = true;
 			if (count == 4) foundFour = true;
 		}
 		
@@ -147,7 +118,7 @@ public partial class RightPanel : TextureRect
 
 		if (foundFive || foundFour)
 		{
-			foreach(Dice die in _dice)
+			foreach(Dice die in MainScene.DiceList)
 			{
 				total += (int) die.Value;
 			}

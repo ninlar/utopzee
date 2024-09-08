@@ -7,7 +7,6 @@ public partial class LeftPanel : TextureRect
 {
     const int NumberOfButtons = 6;
 
-    private IList<Dice> _dice = new List<Dice>(Constants.NumberOfDice);
     private IList<Button> _buttons = new List<Button>(NumberOfButtons);
     private bool[] _buttonDisabled = new bool[NumberOfButtons];
     private Main _mainScene;
@@ -24,7 +23,6 @@ public partial class LeftPanel : TextureRect
 
             for (int i = 1; i <= Constants.NumberOfDice; i++)
             {
-                _dice.Add(value.GetNode<Dice>("DicePad/Die" + i));
                 _buttons.Add(GetNode<Button>("Button" + i));
             }
 
@@ -37,23 +35,11 @@ public partial class LeftPanel : TextureRect
 
     public void MainScene_MustRoll(object sender, EventArgs e)
     {
-        foreach(Button button in _buttons)
+        foreach (Button button in _buttons)
         {
             button.Disabled = true;
         }
     }
-
-	private int[] GetInstanceCounts()
-	{
-		int[] instanceCounts = new int[(int)DiceValue.Six];
-
-		foreach(Dice die in _dice)
-		{
-			instanceCounts[die.Frame]++;
-		}
-
-		return instanceCounts;
-	}
 
     public void MainScene_FirstRoll(object sender, EventArgs e)
     {
@@ -92,169 +78,99 @@ public partial class LeftPanel : TextureRect
 
     public void OneClicked()
     {
-        _buttons[(int) DiceFrame.One].Disabled = true;
+        _buttons[(int)DiceFrame.One].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
-        {
-            if (die.Value == DiceValue.One)
-            {
-                total++;
-            }
-        }
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}        
+        total += instanceCounts[(int)DiceFrame.One];
 
         GetNode<Label>("OneLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.One] = true;
+        _buttonDisabled[(int)DiceFrame.One] = true;
         MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void TwoClicked()
     {
-        _buttons[(int) DiceFrame.Two].Disabled = true;
+        _buttons[(int)DiceFrame.Two].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
+        foreach (Dice die in MainScene.DiceList)
         {
             if (die.Value == DiceValue.Two)
             {
-                total += (int) DiceValue.Two;
+                total += (int)DiceValue.Two;
             }
         }
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}         
+        total += instanceCounts[(int)DiceFrame.Two] * 2;
 
         GetNode<Label>("TwoLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.Two] = true;
+        _buttonDisabled[(int)DiceFrame.Two] = true;
         MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void ThreeClicked()
     {
-        _buttons[(int) DiceFrame.Three].Disabled = true;
+        _buttons[(int)DiceFrame.Three].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
-        {
-            if (die.Value == DiceValue.Three)
-            {
-                total += (int) DiceValue.Three;
-            }
-        }
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}         
+        total += instanceCounts[(int)DiceFrame.Three] * 3;
 
         GetNode<Label>("ThreeLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.Three] = true;
+        _buttonDisabled[(int)DiceFrame.Three] = true;
         MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void FourClicked()
     {
-        _buttons[(int) DiceFrame.Four].Disabled = true;
+        _buttons[(int)DiceFrame.Four].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
-        {
-            if (die.Value == DiceValue.Four)
-            {
-                total += (int) DiceValue.Four;
-            }
-        }
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}         
+        total += instanceCounts[(int)DiceFrame.Four] * 4;
 
         GetNode<Label>("FourLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.Four] = true;
+        _buttonDisabled[(int)DiceFrame.Four] = true;
         MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void FiveClicked()
     {
-        _buttons[(int) DiceFrame.Five].Disabled = true;
+        _buttons[(int)DiceFrame.Five].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
-        {
-            if (die.Value == DiceValue.Five)
-            {
-                total += (int) DiceValue.Five;
-            }
-        }
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}         
+        total += instanceCounts[(int)DiceFrame.Five] * 5;
 
         GetNode<Label>("FiveLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.Five] = true;
+        _buttonDisabled[(int)DiceFrame.Five] = true;
         MainScene.ResetForNextRoll(total, foundFive);
     }
 
     public void SixClicked()
     {
-        _buttons[(int) DiceFrame.Six].Disabled = true;
+        _buttons[(int)DiceFrame.Six].Disabled = true;
         int total = 0;
 
-        foreach (Dice die in _dice)
-        {
-            if (die.Value == DiceValue.Six)
-            {
-                total += (int) DiceValue.Six;
-            }
-        }
+        (int[] instanceCounts, bool foundFive) = MainScene.GetInstanceCounts();
 
-		int[] instanceCounts = GetInstanceCounts();
-		
-		bool foundFive = false;
-
-		foreach(int count in instanceCounts)
-		{
-			if (count == 5) foundFive = true;
-		}         
+        total += instanceCounts[(int)DiceFrame.Six] * 6;
 
         GetNode<Label>("SixLabel/Label").Text = total.ToString();
         PanelTotal += total;
-        _buttonDisabled[(int) DiceFrame.Six] = true;
+        _buttonDisabled[(int)DiceFrame.Six] = true;
         MainScene.ResetForNextRoll(total, foundFive);
-    }			
+    }
 }

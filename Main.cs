@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 
 public partial class Main : Control
@@ -32,6 +34,9 @@ public partial class Main : Control
     public int RollsRemaining { get; set; } = 3;
     public int TurnsCompleted { get; set; } = 0;
     public bool UtopzeeScored { get; set; } = false;
+    public (int[], bool) GetInstanceCounts() => DicePad.GetInstanceCounts();
+    public IList<Dice> DiceList => DicePad.DiceList;
+
     public bool CanLockDice => RollsRemaining > 0 && RollsRemaining != 3;
     public DicePad DicePad => dicePad;
     

@@ -2,12 +2,12 @@ using Godot;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 
 public partial class Main : Control
 {
     const int MaxTurnsCompleted = 13;
 
+    private Godot.RandomNumberGenerator godotRandom = new Godot.RandomNumberGenerator();
     private bool goRight = true;
     private Vector2 prevPos = new Vector2();
     private bool isRolling = false;
@@ -195,16 +195,14 @@ public partial class Main : Control
     
     public void OnTimer()
     {
-        using(var random = System.Security.Cryptography.RandomNumberGenerator.Create())
+        for (int i = 1; i < 6; i++)
         {
-            for (int i = 1; i < 6; i++)
+            if (!GetNode<Sprite2D>("DicePad/Lock" + i).Visible)
             {
-                if (!GetNode<Sprite2D>("DicePad/Lock" + i).Visible)
-                {
-                    GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = GetRandomNumber(random, 0, 6);
-                }
+                GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = godotRandom.RandiRange(0, 5);
+                //GetNode<AnimatedSprite2D>("DicePad/Die" + i).Frame = GetRandomNumber(random, 0, 6);
             }
-        }	
+        }
     }
     
     public void OnRollClicked()
@@ -246,14 +244,6 @@ public partial class Main : Control
         {
             GetNode<Sprite2D>("DicePad/Lock" + i).Visible = false;
         }        
-    }
-
-    private int GetRandomNumber(System.Security.Cryptography.RandomNumberGenerator rng, int minValue, int maxValue)
-    {
-        byte[] randomNumber = new byte[4];
-        rng.GetBytes(randomNumber);
-        int value = BitConverter.ToInt32(randomNumber, 0);
-        return Math.Abs(value % (maxValue - minValue)) + minValue;
     }
 
     public void OnSoundClicked()
